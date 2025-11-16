@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsupervised Learning Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Algorithms</h2>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" id="kmeans-link">K-Means</a></li>
+                    <li><a href="#" id="hierarchical-link">Hierarchical</a></li>
+                    <li><a href="#" id="dbscan-link">DBSCAN</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <h1>K-Means Clustering Visualizer</h1>
+            <div class="controls">
+                <label for="k-value">Clusters (K):</label>
+                <input type="number" id="k-value" value="3" min="1" max="10">
+                <label for="points-value">Data Points:</label>
+                <input type="number" id="points-value" value="150" min="10" max="500" step="10">
+                <label for="distance-metric">Distance Metric:</label>
+                <select id="distance-metric">
+                    <option value="euclidean" selected>Euclidean</option>
+                    <option value="manhattan">Manhattan</option>
+                </select>
+                <label for="init-method">Initialization:</label>
+                <select id="init-method">
+                    <option value="forgy" selected>Forgy</option>
+                    <option value="random_partition">Random Partition</option>
+                    <option value="kmeans++">K-Means++</option>
+                </select>
+                <button id="start-btn">Start</button>
+                <button id="next-step-btn" disabled>Next Step</button>
+                <button id="reset-btn">Reset</button>
+                <div id="completion-message" class="hidden"></div>
+            </div>
+            <div id="plot-container">
+                <div id="plot"></div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

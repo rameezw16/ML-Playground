@@ -1,0 +1,100 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a.active,
+.sidebar nav ul li a:hover {
+    background-color: #575757;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls label {
+    margin-right: 10px;
+}
+
+.controls input {
+    width: 60px;
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.controls button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+.controls button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+#plot {
+    width: 100%;
+    min-height: 500px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+#completion-message {
+    margin-top: 15px;
+    color: #2c7a31; /* A nice green color */
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.hidden {
+    display: none;
+}
