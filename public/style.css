@@ -43,6 +43,8 @@ body {
 .sidebar nav ul li a:hover {
     background-color: #00ffff;
     color: #111;
+   
+    
 }
 
 /* Main content */
@@ -138,3 +140,12 @@ body {
 .hidden {
     display: none;
 }
+
+.btns{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+

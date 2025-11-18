@@ -21,10 +21,19 @@
         <main class="main-content">
             <h1>K-Means Clustering Visualizer</h1>
             <div class="controls">
+                
                 <label for="k-value">Clusters (K):</label>
                 <input type="number" id="k-value" value="3" min="1" max="10">
                 <label for="points-value">Data Points:</label>
                 <input type="number" id="points-value" value="150" min="10" max="500" step="10">
+                <label for="shape-type">Shape:</label>
+                <select id="shape-type">
+                    <option value="random" selected>Random</option>
+                    <option value="circle">Circle</option>
+                    <option value="moons">Two Moons</option>
+                    <option value="spiral">Spiral</option>
+                    <option value="gaussian">Gaussian Blob</option>
+                </select>
                 <label for="distance-metric">Distance Metric:</label>
                 <select id="distance-metric">
                     <option value="euclidean" selected>Euclidean</option>
@@ -36,9 +45,10 @@
                     <option value="random_partition">Random Partition</option>
                     <option value="kmeans++">K-Means++</option>
                 </select>
+                <div class="btns">
                 <button id="start-btn">Start</button>
                 <button id="next-step-btn" disabled>Next Step</button>
-                <button id="reset-btn">Reset</button>
+                <button id="reset-btn">Reset</button></div>
                 <div id="completion-message" class="hidden"></div>
             </div>
             <div id="plot-container">

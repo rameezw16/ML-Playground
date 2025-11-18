@@ -22,6 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const colorScale = d3.scaleOrdinal()
         .range(['#00ffff', '#ff00ff', '#ff4500', '#7fff00', '#ffd700', '#1e90ff']);
 
+    pointsValueInput.addEventListener('input', () => {
+        let value = parseInt(pointsValueInput.value, 10);
+        if (value > 1000) 
+            value = 1000;
+        if (value < 1) 
+            value = 1;
+        pointsValueInput.value = value;
+        });
+
+    kValueInput.addEventListener('input', () => {
+        let value = parseInt(kValueInput.value, 10);
+        if (value > 10) 
+            value = 10; 
+        if (value < 1) 
+            value = 1;   
+        kValueInput.value = value;
+    });
+            
     function initializePlot() {
         visualizationInProgress = false;
         Math.seedrandom(SEED); // Reset random generator
@@ -49,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
         svg.append("g").attr("class", "hull-paths");
 
         const numPoints = parseInt(pointsValueInput.value, 10);
-        data = generateRandomData(numPoints);
+        const shape = document.getElementById("shape-type").value;
+        data = generateDataByShape(shape, numPoints);
+
         drawPoints(data);
 
         startBtn.disabled = false;
@@ -63,6 +83,143 @@ document.addEventListener('DOMContentLoaded', () => {
             y: Math.random() * 100
         }));
     }
+
+    function generateMoons(numPoints) {
+        const points = [];
+        const baseRadius = 20;     // main radius
+        const thickness = 6;       // thickness of the moon band
+        const offsetX = 40;        // horizontal shift to stay inside 100x100
+        const offsetY = 45;        // vertical positioning
+    
+        function randomRadius() {
+            return baseRadius + (Math.random() * thickness - thickness / 2);
+        }
+    
+        // First Moon (upper arc)
+        for (let i = 0; i < numPoints; i++) {
+            const angle = Math.random() * Math.PI;
+            const radius = randomRadius();
+            const x = radius * Math.cos(angle) + offsetX;
+            const y = radius * Math.sin(angle) + offsetY;
+            points.push({ x, y });
+        }
+    
+        // Second Moon (mirrored lower arc), shifted right
+        for (let i = 0; i < numPoints; i++) {
+            const angle = Math.random() * Math.PI;
+            const radius = randomRadius();
+            const x = radius * Math.cos(angle) + offsetX + 20;
+            const y = -radius * Math.sin(angle) + offsetY;
+            points.push({ x, y });
+        }
+    
+        return points;
+    }
+    
+    
+    
+
+function generateDoubleRing(count) {
+    const result = [];
+    const center = { x: 50, y: 50 };
+
+    const outerRadius = 30;
+    const innerRadius = 15;
+
+    // Less noise = tighter ring
+    const noise = 0.4;
+
+    const half = Math.floor(count / 2);
+
+    for (let i = 0; i < half; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = outerRadius + (Math.random() * noise - noise / 2);
+        result.push({
+            x: center.x + r * Math.cos(angle),
+            y: center.y + r * Math.sin(angle)
+        });
+    }
+
+    for (let i = 0; i < count - half; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = innerRadius + (Math.random() * noise - noise / 2);
+        result.push({
+            x: center.x + r * Math.cos(angle),
+            y: center.y + r * Math.sin(angle)
+        });
+    }
+
+    return result;
+}
+
+
+function generateGaussianBlobs(count) {
+    const result = [];
+    const numBlobs = Math.floor(Math.random() * 3) + 3; // 3–5 blobs
+    const minDistance = 22; // minimum distance between blob centers
+    const centers = [];
+
+    function farEnough(x, y) {
+        return centers.every(c => Math.hypot(c.x - x, c.y - y) >= minDistance);
+    }
+
+    // Pick spaced-apart centers
+    while (centers.length < numBlobs) {
+        const x = 15 + Math.random() * 70;
+        const y = 15 + Math.random() * 70;
+        if (farEnough(x, y)) {
+            centers.push({ x, y });
+        }
+    }
+
+    const stdDev = 4.5; // tighter clusters
+
+    function gaussianRandom() {
+        const u = Math.random();
+        const v = Math.random();
+        return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    for (let i = 0; i < count; i++) {
+        const c = centers[i % numBlobs];
+        result.push({
+            x: c.x + gaussianRandom() * stdDev,
+            y: c.y + gaussianRandom() * stdDev
+        });
+    }
+    return result;
+}
+
+
+
+    function generateSpiralData(count) {
+        const points = [];
+        const centerX = 50, centerY = 50; 
+        const maxRadius = 40; 
+        const maxAngle = 4 * Math.PI; 
+        
+        for (let i = 0; i < count; i++) {
+            const t = i / count; 
+            const angle = t * maxAngle;
+            const r = t * maxRadius; 
+            points.push({
+                x: centerX + r * Math.cos(angle),
+                y: centerY + r * Math.sin(angle)
+            });
+        }
+        return points;
+    }
+
+    function generateDataByShape(shape, count) {
+        switch (shape) {
+            case "circle": return generateDoubleRing(count);
+            case "moons": return generateMoons(count);
+            case "spiral": return generateSpiralData(count);
+            case "gaussian": return generateGaussianBlobs(count);
+            default: return generateRandomData(count);
+        }
+    }
+
 
     function drawPoints(points) {
         svg.selectAll(".point").remove();
