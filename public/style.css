@@ -103,10 +103,13 @@ body {
 
 /* Plot container */
 #plot {
-    width: 100%;
-    min-height: 500px;
+    width: 65%;
+    margin: 0 auto;
     border: 1px solid #333;
     background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* points */
@@ -137,6 +140,16 @@ body {
     padding: 10px 0;
 }
 
+#dbscan-controls span {
+    display: inline-block;
+    width: 30px;
+    text-align: left;
+}
+
+#points-control.hidden {
+    display: none;
+}
+
 .hidden {
     display: none;
 }
@@ -147,5 +160,8 @@ body {
     margin-top: 10px;
 }
 
+#shape-type {
+    width: 125px;
+}
 
 

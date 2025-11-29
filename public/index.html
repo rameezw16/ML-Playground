@@ -19,13 +19,34 @@
             </nav>
         </aside>
         <main class="main-content">
-            <h1>K-Means Clustering Visualizer</h1>
+            <h1 id="main-title">K-Means Clustering Visualizer</h1>
             <div class="controls">
+                <div id="kmeans-controls">
+                    <label for="k-value">Clusters (K):</label>
+                    <input type="number" id="k-value" value="3" min="1" max="10">
+                    <label for="distance-metric">Distance Metric:</label>
+                    <select id="distance-metric">
+                        <option value="euclidean" selected>Euclidean</option>
+                        <option value="manhattan">Manhattan</option>
+                    </select>
+                    <label for="init-method">Initialization:</label>
+                    <select id="init-method">
+                        <option value="forgy" selected>Forgy</option>
+                        <option value="random_partition">Random Partition</option>
+                        <option value="kmeans++">K-Means++</option>
+                    </select>
+                </div>
+
+                <div id="dbscan-controls" class="hidden">
+                    <label for="epsilon-value">Epsilon (ε):</label>
+                    <input type="range" id="epsilon-value" value="5" min="1" max="20" step="0.5">
+                    <span id="epsilon-display">5</span>
+                    <label for="min-pts-value">Min Points:</label>
+                    <input type="number" id="min-pts-value" value="3" min="1" max="20">
+                </div>
                 
-                <label for="k-value">Clusters (K):</label>
-                <input type="number" id="k-value" value="3" min="1" max="10">
-                <label for="points-value">Data Points:</label>
-                <input type="number" id="points-value" value="150" min="10" max="500" step="10">
+                <hr>
+
                 <label for="shape-type">Shape:</label>
                 <select id="shape-type">
                     <option value="random" selected>Random</option>
@@ -34,17 +55,10 @@
                     <option value="spiral">Spiral</option>
                     <option value="gaussian">Gaussian Blob</option>
                 </select>
-                <label for="distance-metric">Distance Metric:</label>
-                <select id="distance-metric">
-                    <option value="euclidean" selected>Euclidean</option>
-                    <option value="manhattan">Manhattan</option>
-                </select>
-                <label for="init-method">Initialization:</label>
-                <select id="init-method">
-                    <option value="forgy" selected>Forgy</option>
-                    <option value="random_partition">Random Partition</option>
-                    <option value="kmeans++">K-Means++</option>
-                </select>
+                <span id="points-control">
+                    <label for="points-value">Data Points:</label>
+                    <input type="number" id="points-value" value="150" min="10" max="500" step="10">
+                </span>
                 <div class="btns">
                 <button id="start-btn">Start</button>
                 <button id="next-step-btn" disabled>Next Step</button>
@@ -58,6 +72,10 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js" defer></script>
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="shapes.js" defer></script>
+    <script src="plot.js" defer></script>
+    <script src="kmeans.js" defer></script>
+    <script src="dbscan.js" defer></script>
     <script src="script.js" defer></script>
 </body>
 </html>
