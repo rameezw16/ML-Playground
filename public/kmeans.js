@@ -252,6 +252,9 @@ window.KMeans = (() => {
         startBtn.disabled = true;
         nextStepBtn.disabled = false;
 
+        // Reset random seed to ensure consistent initialization
+        Math.seedrandom(SEED);
+
         const k = parseInt(kValueInput.value, 10);
         centroids = initializeCentroids(k);
         drawCentroids(centroids);
@@ -282,9 +285,72 @@ window.KMeans = (() => {
         }
     }
 
+    async function fastForward() {
+        // Reset any ongoing visualization
+        visualizationInProgress = false;
+        startBtn.disabled = true;
+        nextStepBtn.disabled = true;
+        completionMessage.classList.add('hidden');
+
+        // Clear any existing visualization elements
+        svg.selectAll(".hull").remove();
+
+        // Reset random seed to ensure consistent initialization
+        Math.seedrandom(SEED);
+
+        const k = parseInt(kValueInput.value, 10);
+        centroids = initializeCentroids(k);
+        iterationCount = 0;
+        visualizationInProgress = true;
+
+        // Run algorithm to completion without visualization delays
+        while (true) {
+            iterationCount++;
+            
+            // Assignment step
+            clusters = assignToClusters(data, centroids);
+            
+            // Update step
+            const newCentroids = updateCentroids(clusters);
+            
+            // Check for convergence
+            const changed = JSON.stringify(centroids) !== JSON.stringify(newCentroids);
+            
+            if (!changed) {
+                // Converged
+                centroids = newCentroids;
+                break;
+            }
+            
+            centroids = newCentroids;
+        }
+
+        // Draw final result
+        clusters = assignToClusters(data, centroids);
+        drawCentroids(centroids);
+        drawClusterHulls(clusters);
+        
+        svg.selectAll(".point")
+            .transition().duration(300)
+            .style("fill", (d) => {
+                for (let i = 0; i < clusters.length; i++) {
+                    if (clusters[i].includes(d)) 
+                        return colorScale(i);
+                }
+                return "#555";
+            });
+
+        visualizationInProgress = false;
+        completionMessage.textContent = `Algorithm converged in ${iterationCount} steps.`;
+        completionMessage.classList.remove('hidden');
+        startBtn.disabled = false;
+    }
+
     return {
         initializePlot,
         startVisualization,
-        performNextStep
+        performNextStep,
+        fastForward,
+        isVisualizationInProgress: () => visualizationInProgress
     };
 })();

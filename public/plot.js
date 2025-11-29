@@ -1,5 +1,5 @@
 window.Plot = (() => {
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const margin = { top: 50, right: 20, bottom: 30, left: 40 }; // Increased top margin for status text
 
     function initialize(containerId) {
         const plotDiv = document.getElementById(containerId);

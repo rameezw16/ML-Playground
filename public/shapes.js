@@ -10,9 +10,9 @@ window.Shapes = (() => {
     function generateMoons(count) {
         const points = [];
         const n_half = Math.floor(count / 2);
-        const radius = 22;
+        const radius = 20;
         const thickness = 3;
-        const separation = 10;
+        const separation = -5;
     
         // First moon (upper arc)
         for (let i = 0; i < n_half; i++) {

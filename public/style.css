@@ -101,6 +101,22 @@ body {
     cursor: not-allowed;
 }
 
+#autoplay-btn {
+    background-color: #00ff00;
+}
+
+#autoplay-btn:hover:not(:disabled) {
+    background-color: #00cc00;
+}
+
+#fastforward-btn {
+    background-color: #ff8800;
+}
+
+#fastforward-btn:hover:not(:disabled) {
+    background-color: #cc6600;
+}
+
 /* Plot container */
 #plot {
     width: 65%;
@@ -115,7 +131,21 @@ body {
 /* points */
 .point {
     stroke: #000;
+    stroke-width: 1.5px;
+}
+
+/* New styles for DBSCAN visualization */
+.epsilon-circle {
+    fill: lightblue;
+    fill-opacity: 0.2;
+    stroke: blue;
     stroke-width: 1px;
+}
+
+.current-point-highlight {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
 }
 
 /* centroids */
